@@ -1,0 +1,203 @@
+// 头部样式
+.header {
+  height: @header-height;
+  background-color: @white;
+  box-shadow: @shadow-sm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 @spacing-lg;
+  position: relative;
+  z-index: 100;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: @spacing-md;
+}
+
+.toggleBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: @border-radius;
+  transition: background-color @transition-fast;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  &:hover {
+    background-color: @background-color;
+  }
+}
+
+.title {
+  font-size: @font-size-lg;
+  font-weight: 600;
+  color: @text-color;
+  margin: 0;
+  white-space: nowrap;
+}
+
+// 右侧内容（搜索和全屏按钮）
+.headerRight {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; // 确保右对齐
+  width: 100%;
+}
+
+// 搜索框按钮
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  padding: 0;
+  width: 40px;
+  height: 40px;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// 搜索框弹出层
+.searchPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);  // 增加阴影
+  padding: 30px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;  // 调整宽度
+  height: auto;
+  text-align: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 20px;  // 增加内边距
+  font-size: 16px;
+  border-radius: 8px;  // 圆角
+  border: 1px solid #ccc;  // 淡灰色边框
+  margin-bottom: 15px;
+  outline: none;
+
+  &:focus {
+    border-color: #1890ff;  // 聚焦时显示蓝色边框
+    box-shadow: 0 0 5px rgba(24, 144, 255, 0.3);  // 聚焦时增加阴影
+  }
+
+  &::placeholder {
+    color: #999;  // 更浅的灰色
+    font-size: 14px;
+  }
+}
+
+// 搜索框内容
+.searchContent {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 10px;
+
+  p {
+    font-size: 14px;
+    color: #888;  // 更加柔和的颜色
+  }
+}
+
+// 关闭按钮样式
+.closeSearch {
+  padding: 10px 20px;
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: #40a9ff;  // 悬停时背景颜色更亮
+  }
+}
+
+// 遮罩背景
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);  // 半透明黑色
+  z-index: 999;  // 确保遮罩层位于弹窗后面
+}
+
+
+// 用户信息
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: @spacing-md;
+  padding-left: 8px;
+}
+
+.userName {
+  display: flex;
+  width: 24px;
+  height: 24px;
+}
+
+.logoutBtn {
+  padding: @spacing-xs @spacing-md;
+  border: 1px solid @border-color;
+  background-color: @white;
+  color: @text-color;
+  border-radius: @border-radius;
+  cursor: pointer;
+  transition: all @transition-fast;
+  
+  &:hover {
+    border-color: @error-color;
+    color: @error-color;
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .header {
+    padding: 0 @spacing-md;
+  }
+  
+  .title {
+    font-size: @font-size-md;
+  }
+}

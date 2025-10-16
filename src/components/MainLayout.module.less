@@ -1,0 +1,39 @@
+@import "@/assets/styles/variables.less";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: @background-color;
+}
+
+.contentWrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.mainContent {
+  flex: 1;
+  padding: @spacing-lg;
+  overflow-y: auto;
+  transition: margin-left @transition-normal;
+  margin-left: @sidebar-width;
+  background-color: @background-color;
+}
+
+.mainContentCollapsed {
+  margin-left: 80px; // 折叠后的宽度
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .mainContent {
+    margin-left: 0;
+    padding: @spacing-md;
+  }
+  
+  .mainContentCollapsed {
+    margin-left: 0;
+  }
+}

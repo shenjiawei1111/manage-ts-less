@@ -1,0 +1,142 @@
+@import "@/assets/styles/variables.less";
+
+// 侧边栏样式
+.sidebar {
+  width: @sidebar-width;
+  background-color: #000;  // 设置背景色为黑色
+  border-right: 1px solid @border-color;
+  height: calc(100vh - @header-height);
+  overflow-y: auto;
+  transition: width @transition-normal;
+  position: fixed;
+  left: 0;
+  top: @header-height;
+  z-index: 99;
+  border-radius: 8px;
+}
+
+// 收缩后的样式
+.collapsed {
+  width: 80px;
+}
+
+.nav {
+  padding: @spacing-md 0;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// 每个菜单项
+.menuItem {
+  position: relative;
+  // 固定菜单项高度，防止内容变化导致高度变化
+  min-height: 40px; // 根据实际设计调整
+}
+
+// 菜单链接和子菜单标题
+.menuLink,
+.subMenuTitle {
+  display: flex;
+  align-items: center;
+  padding: @spacing-sm @spacing-lg;
+  color: #fff;  // 设置字体颜色为白色
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-size: @font-size-sm;
+  line-height: 24px;
+  // 添加box-sizing确保padding不会影响整体宽度
+  box-sizing: border-box;
+}
+
+// 鼠标悬停时的效果
+.menuLink:hover,
+.subMenuTitle:hover {
+  // 只保留背景色变化，不改变任何可能影响布局的属性
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;  // 悬停时字体颜色为白色
+}
+
+// 激活的菜单项
+.activeLink {
+  color: #fff;  // 激活时字体颜色为白色
+  background-color: rgba(255, 255, 255, 0.15); // 添加背景色突出显示
+  // 确保与普通状态完全相同的布局属性
+  padding: @spacing-sm @spacing-lg;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  font-size: @font-size-sm;
+  line-height: 24px;
+  box-sizing: border-box;
+}
+
+// 菜单图标
+.menuIcon {
+  font-size: 18px;
+  margin-right: @spacing-md;
+  width: 20px;
+  text-align: center;
+  // 固定图标的显示方式，防止任何位移
+  display: inline-block;
+}
+
+// 菜单标签
+.menuLabel {
+  flex: 1;
+}
+
+// 子菜单样式
+.subMenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #0d0942;  
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+// 箭头样式
+.arrow {
+  margin-left: auto;
+  transition: transform @transition-fast;
+}
+
+.arrow.open {
+  transform: rotate(180deg); // 打开时旋转180度
+}
+
+// 固定子菜单的padding-left值，避免过渡时的移动
+.subMenu .menuLink,
+.subMenu .subMenuTitle {
+  padding-left: @spacing-lg; // 使用固定像素值代替变量，确保稳定
+  color: #fff; 
+  // 移除所有过渡效果
+  transition: none; // 确保子菜单项也没有任何过渡效果
+  // 确保与父菜单项相同的布局稳定性
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  font-size: @font-size-sm;
+  line-height: 24px;
+  box-sizing: border-box;
+}
