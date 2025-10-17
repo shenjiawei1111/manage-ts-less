@@ -1,8 +1,63 @@
 .moduleWatermark {
   padding: 24px;
+  position: relative;
+  
+  // 控制按钮区域样式
+  .controls {
+    position: absolute;
+    top: 10px;
+    left: 24px;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+  }
+  
+  // 控制按钮样式
+  .controlButton {
+    padding: 5px 10px;
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    
+    &:hover {
+      border-color: #1890ff;
+      color: #1890ff;
+    }
+    
+    &.active {
+      background-color: #fff1f0;
+      border-color: #ff4d4f;
+      color: #ff4d4f;
+    }
+  }
+  
+  // 水印容器样式
+  .watermarkContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9;
+    overflow: hidden;
+  }
+  
+  // 水印文本样式
+  .watermarkText {
+    position: absolute;
+    font-size: 16px;
+    color: rgba(200, 200, 200, 0.3);
+    transform: rotate(-15deg);
+    white-space: nowrap;
+    user-select: none;
+  }
   
   .header {
     margin-bottom: 24px;
+    margin-top: 40px; // 为顶部按钮留出空间
     
     h1 {
       font-size: 24px;
@@ -20,6 +75,12 @@
     p {
       color: #666;
       margin: 0;
+    }
+    
+    .description {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #999;
     }
   }
 }

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DatePicker, Select, Card, Statistic, Row, Col, Typography } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
-import { Line, Column } from '@ant-design/charts';
+import * as echarts from 'echarts';
 import styles from './Dashboard.module.less';
 
 const { Title } = Typography;
@@ -45,71 +45,247 @@ const Dashboard: React.FC = () => {
     { name: '流觞醉气', value: 300 },
   ];
 
-const lineConfig = {
-  data: lineData, // 数据
-  xField: 'date', // X轴字段
-  yField: ['value1', 'value2'], // Y轴字段，可以显示多个 Y 轴
-  smooth: true, // 是否平滑曲线
-  animation: true,
-  legend: {
-    position: 'top', // 设置图例的位置
-  },
-  // 使用更直接的方式设置x轴样式 - 适合@ant-design/charts 2.x
-  xAxis: {
-    label: {
-      fill: '#000000', // 直接设置字体颜色，不嵌套在style中
-      fontSize: 16, // 直接设置字体大小
-      fontWeight: 'bold', // 直接设置字重
-    },
-    line: {
-      stroke: '#000000', // 直接设置线条颜色
-      lineWidth: 2, // 直接设置线条宽度
-    },
-    tickLine: {
-      stroke: '#000000', // 直接设置刻度线颜色
-      lineWidth: 2, // 直接设置刻度线宽度
-    },
-  },
-  // 使用更直接的方式设置y轴样式 - 适合@ant-design/charts 2.x
-  yAxis: {
-    label: {
-      fill: '#000000', // 直接设置字体颜色
-      fontSize: 16, // 直接设置字体大小
-      fontWeight: 'bold', // 直接设置字重
-    },
-    line: {
-      stroke: '#000000', // 直接设置线条颜色
-      lineWidth: 2, // 直接设置线条宽度
-    },
-    tickLine: {
-      stroke: '#000000', // 直接设置刻度线颜色
-      lineWidth: 2, // 直接设置刻度线宽度
-    },
-  },
-  tooltip: {
-    crosshairs: {
-      type: 'xy',
-    },
-  },
-};
+  // 创建echarts实例的引用
+  const lineChartRef = useRef<HTMLDivElement>(null);
+  const lineChartInstance = useRef<echarts.ECharts | null>(null);
+  const barChartRef = useRef<HTMLDivElement>(null);
+  const barChartInstance = useRef<echarts.ECharts | null>(null);
 
+  // 初始化折线图
+  useEffect(() => {
+    if (lineChartRef.current && !lineChartInstance.current) {
+      // 初始化图表实例
+      lineChartInstance.current = echarts.init(lineChartRef.current);
+      
+      // 图表配置选项
+      const option = {
+        tooltip: {
+          trigger: 'axis',
+          crosshair: {
+            type: 'cross',
+          },
+        },
+        legend: {
+          data: ['系列1', '系列2'],
+          textStyle: {
+            color: '#000000',
+            fontSize: 14,
+          },
+          top: '0%', // 将图例移到图表顶部
+          left: 'center', // 水平居中
+          orient: 'horizontal', // 水平排列
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          top: '20%', // 增加顶部空间，为图例留出位置
+          bottom: '3%',
+          containLabel: true,
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: lineData.map(item => item.date),
+            axisLabel: {
+              color: '#000000', // x轴标签颜色 - 黑色
+              fontSize: 16,     // x轴标签字体大小
+              fontWeight: 'normal', // 统一字体粗细
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // x轴线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+            axisTick: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // x轴刻度线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+          },
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            show: true,
+            axisLabel: {
+              color: '#000000', // y轴标签颜色 - 黑色
+              fontSize: 16,     // y轴标签字体大小
+              fontWeight: 'normal', // 统一字体粗细
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // y轴线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+            axisTick: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // y轴刻度线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: '#999999',
+                type: 'dashed',
+              },
+            },
+          },
+        ],
+        series: [
+          {
+            name: '系列1',
+            type: 'line',
+            smooth: true,
+            data: lineData.map(item => item.value1),
+            itemStyle: {
+              color: '#1890ff', // 线条颜色
+            },
+          },
+          {
+            name: '系列2',
+            type: 'line',
+            smooth: true,
+            data: lineData.map(item => item.value2),
+            itemStyle: {
+              color: '#52c41a', // 线条颜色
+            },
+          },
+        ],
+      };
 
-  // 柱状图配置
-  const barConfig = {
-    data: barData,
-    xField: 'value',
-    yField: 'name',
-    isGroup: false,
-    animation: true,
-    legend: {
-      position: 'top',
-    },
-    xAxis: {
-      label: {
-        formatter: (v: string) => `${v}`,
-      },
-    },
-  };
+      // 设置图表选项
+      lineChartInstance.current.setOption(option);
+
+      // 监听窗口大小变化
+      const handleResize = () => {
+        lineChartInstance.current?.resize();
+      };
+      window.addEventListener('resize', handleResize);
+
+      // 组件卸载时清理
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        lineChartInstance.current?.dispose();
+        lineChartInstance.current = null;
+      };
+    }
+  }, []);
+
+  // 初始化柱状图
+  useEffect(() => {
+    if (barChartRef.current && !barChartInstance.current) {
+      // 初始化图表实例
+      barChartInstance.current = echarts.init(barChartRef.current);
+      
+      // 图表配置选项
+      const option = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+          },
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true,
+        },
+        xAxis: [
+          {
+            type: 'value',
+            show: true,
+            axisLabel: {
+              color: '#000000', // x轴标签颜色 - 黑色
+              fontSize: 16,     // x轴标签字体大小
+              fontWeight: 'normal', // 统一字体粗细
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // x轴线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+            axisTick: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // x轴刻度线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: '#999999',
+                type: 'dashed',
+              },
+            },
+          },
+        ],
+        yAxis: [
+          {
+            type: 'category',
+            data: barData.map(item => item.name),
+            show: true,
+            axisLabel: {
+              color: '#000000', // y轴标签颜色 - 黑色
+              fontSize: 16,     // y轴标签字体大小
+              fontWeight: 'normal', // 统一字体粗细
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // y轴线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+            axisTick: {
+              show: true,
+              lineStyle: {
+                color: '#000000', // y轴刻度线颜色 - 黑色
+                width: 2,        // 统一线宽
+              },
+            },
+          },
+        ],
+        series: [
+          {
+            data: barData.map(item => item.value),
+            type: 'bar',
+            itemStyle: {
+              color: '#1890ff', // 柱状图颜色
+            },
+          },
+        ],
+      };
+
+      // 设置图表选项
+      barChartInstance.current.setOption(option);
+
+      // 监听窗口大小变化
+      const handleResize = () => {
+        barChartInstance.current?.resize();
+      };
+      window.addEventListener('resize', handleResize);
+
+      // 组件卸载时清理
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        barChartInstance.current?.dispose();
+        barChartInstance.current = null;
+      };
+    }
+  }, []);
 
   return (
     <div className={styles.dashboard}>
@@ -234,18 +410,14 @@ const lineConfig = {
         <Col xs={24} lg={12}>
           <Card className={styles.section}>
             <Title level={4} style={{ marginBottom: '16px' }}>有效充值占比</Title>
-            <div style={{ height: 300 }}>
-              <Line {...lineConfig} />
-            </div>
+            <div style={{ height: 300 }} ref={lineChartRef}></div>
           </Card>
         </Col>
         
         <Col xs={24} lg={12}>
           <Card className={styles.section}>
             <Title level={4} style={{ marginBottom: '16px' }}>当日充值排行</Title>
-            <div style={{ height: 300 }}>
-              <Column {...barConfig} />
-            </div>
+            <div style={{ height: 300 }} ref={barChartRef}></div>
           </Card>
         </Col>
       </Row>

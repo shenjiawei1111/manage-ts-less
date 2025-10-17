@@ -33,10 +33,7 @@
 // 每个菜单项
 .menuItem {
   position: relative;
-  // 固定菜单项高度，防止内容变化导致高度变化
-  min-height: 40px; // 根据实际设计调整
 }
-
 // 菜单链接和子菜单标题
 .menuLink,
 .subMenuTitle {
@@ -92,6 +89,10 @@
 // 菜单标签
 .menuLabel {
   flex: 1;
+  white-space: nowrap; // 确保文本不会换行
+  overflow: hidden;    // 超出部分隐藏
+  text-overflow: ellipsis; // 超出部分显示省略号
+  transition: none;    // 移除任何过渡效果，避免动画期间的不稳定
 }
 
 // 子菜单样式
