@@ -6,7 +6,6 @@ import MainLayout from '@/components/MainLayout';
 // 懒加载页面组件
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Dashboard = lazy(() => import('@/pages/dashboard/Dashboard'));
-const Users = lazy(() => import('@/pages/system/Users'));
 const ForgotPassword = lazy(() => import('@/pages/auth/ForgotPassword'));
 // 组件模块
 const ModuleCut = lazy(() => import('@/pages/module/ModuleCut'));
@@ -18,7 +17,8 @@ const UserList = lazy(() => import('@/pages/system/UserList'));
 const UserMenu = lazy(() => import('@/pages/system/UserMenu'));
 const UserRole = lazy(() => import('@/pages/system/UserRole'));
 // 内容管理模块
-const SettingsArticle = lazy(() => import('@/pages/content/SettingsArticle'))
+const SettingsArticle = lazy(() => import('@/pages/content/SettingsArticle'));
+const ArticleForm = lazy(() => import('@/pages/content/article/ArticleForm'));
 
 
 // 加载中组件
@@ -94,16 +94,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      {
-        path: 'users',
-        element: (
-          <ProtectedRoute requiredPermission="user:list">
-            <Suspense fallback={<Loading />}>
-              <Users />
-            </Suspense>
-          </ProtectedRoute>
-        ),
-      },
+
       // 组件模块路由
       {
         path: 'module/cut',
@@ -177,12 +168,29 @@ const router = createBrowserRouter([
         ),
       },
       // 内容管理模块路由
-      {
-        path: 'settings/article',
+      { path: 'settings/article',
         element: (
           <ProtectedRoute>
             <Suspense fallback={<Loading />}>
               <SettingsArticle />
+            </Suspense>
+          </ProtectedRoute>
+        ),
+      },
+      { path: 'settings/article/new',
+        element: (
+          <ProtectedRoute>
+            <Suspense fallback={<Loading />}>
+              <ArticleForm />
+            </Suspense>
+          </ProtectedRoute>
+        ),
+      },
+      { path: 'settings/article/:id',
+        element: (
+          <ProtectedRoute>
+            <Suspense fallback={<Loading />}>
+              <ArticleForm />
             </Suspense>
           </ProtectedRoute>
         ),
