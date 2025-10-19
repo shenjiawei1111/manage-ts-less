@@ -95,12 +95,26 @@
   transition: none;    // 移除任何过渡效果，避免动画期间的不稳定
 }
 
-// 子菜单样式
+// 子菜单样式 - 添加过渡动画
 .subMenu {
   list-style: none;
   padding: 0;
   margin: 0;
-  background-color: #0d0942;  
+  background-color: #0d0942;
+  // 初始状态：关闭
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+// 展开状态
+.subMenuOpen {
+  // 展开状态：设置足够大的高度以容纳内容
+  max-height: 500px;
+  opacity: 1;
+  // 展开时添加一点padding使效果更自然
+  padding-bottom: 8px;
 }
 
 // 响应式设计

@@ -1,25 +1,212 @@
 .userList {
   padding: 24px;
-  
-  .header {
-    margin-bottom: 24px;
-    
-    h1 {
-      font-size: 24px;
-      margin: 0;
-      color: #333;
-    }
-  }
-  
-  .content {
-    background: #fff;
-    padding: 24px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
-    p {
-      color: #666;
-      margin: 0;
-    }
-  }
+  background: #fff;
+  border-radius: 6px;
+}
+
+/* 搜索栏样式 */
+.userList .header {
+  margin-bottom: 24px;
+}
+
+.userList .header h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+}
+
+/* 搜索栏样式 */
+.userList .searchBar {
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  width: 100%;
+}
+
+/* 操作栏样式 */
+.userList .actionBar {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 表格容器样式 */
+.userList .tableContainer {
+  margin-top: 16px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+}
+
+/* 列筛选下拉菜单样式 - 纯白框 */
+.filterDropdown {
+  padding: 8px;
+  background: #ffffff !important; /* 强制纯白背景 */
+  border: 1px solid #d9d9d9 !important; /* 添加边框 */
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15) !important; /* 增强阴影效果 */
+  min-width: 120px;
+  max-height: 300px;
+  overflow-y: auto;
+  opacity: 1 !important; /* 确保不透明 */
+  z-index: 1050 !important; /* 确保在最上层 */
+  position: relative;
+}
+
+/* 列筛选菜单项样式 */
+.filterDropdownItem {
+  padding: 4px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+}
+
+.filterDropdownItem:hover {
+  background-color: #f5f5f5;
+}
+
+/* 覆盖Antd默认的下拉菜单样式 */
+.ant-dropdown-menu {
+  background: #ffffff !important;
+  border: 1px solid #d9d9d9 !important;
+  opacity: 1 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 覆盖Antd下拉菜单内部元素样式 */
+.ant-dropdown-menu-item {
+  background: #ffffff !important;
+}
+
+/* 确保下拉菜单不透明 */
+.ant-dropdown {
+  background: #ffffff !important;
+}
+
+/* 列筛选菜单项样式 */
+.userList .filterDropdownItem {
+  padding: 4px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userList .filterDropdownItem:hover {
+  background-color: #f5f5f5;
+}
+
+/* 表单项目样式 */
+.userList .formItem {
+  margin-bottom: 16px;
+}
+
+/* ===== 搜索表单完全重写 - 使用CSS Grid布局 ===== */
+
+/* 搜索表单主容器 */
+.fullWidthForm {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 搜索表单包装器 */
+.searchFormWrapper {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 使用CSS Grid布局的搜索表单行 */
+.searchFormRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4列等宽布局 */
+  grid-gap: 16px; /* 列间距 */
+  width: 100% !important;
+  margin-bottom: 16px !important;
+  padding: 0 !important;
+}
+
+/* 搜索表单项目 - 确保正确对齐 */
+.searchFormItem {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
+}
+
+/* 覆盖Antd的表单项目样式 */
+.searchFormItem.ant-form-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 标签样式 - 固定宽度并右对齐 */
+.searchFormItem .ant-form-item-label {
+  flex: 0 0 auto;
+  text-align: right !important;
+  padding: 0 8px 0 0 !important;
+  margin: 0 !important;
+  white-space: nowrap;
+  width: 80px !important;
+}
+
+/* 输入控件容器 - 占满剩余空间 */
+.searchFormItem .ant-form-item-control-wrapper {
+  flex: 1;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+/* 输入控件本身 - 强制占满容器 */
+.searchFormItem .ant-input {
+  width: 100% !important;
+  min-width: 100px;
+  max-width: none !important;
+  box-sizing: border-box;
+}
+
+/* 确保Antd的Form组件不添加额外样式 */
+.fullWidthForm.ant-form {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 按钮容器 - 右对齐 */
+.searchFormButtons {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  margin: 0 !important;
+}
+
+/* 最后一行的搜索按钮容器 */
+.userList .searchFormRow:last-child {
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
+/* 按钮组样式 */
+.userList .searchFormButtons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 8px 0 0;
+}
+
+/* 移除最后一个输入框的右边距 */
+.userList .searchFormRow:not(:last-child) .searchFormItem:last-child {
+  margin-right: 0 !important;
 }

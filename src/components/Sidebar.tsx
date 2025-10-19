@@ -85,11 +85,11 @@ const menuItems: MenuItem[] = [
     permissions: []
   },
 
-  {
+  { 
     key: 'external-links',
     label: '外部链接',
     icon: '🔗',
-    url: 'https://github.com/shenjiawei1111/sjw-admin-react' // 添加外部链接URL
+    url: 'https://github.com/shenjiawei1111/manage-ts-less/tree/master/src/pages/dashboard' // 外部链接URL
   }
 ];
 
@@ -170,11 +170,9 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
               {isOpen ? '▼' : '▶'}
             </span>
           </button>
-          {isOpen && (
-            <ul className={styles.subMenu}>
-              {item.children.map(child => renderMenuItem(child))}
-            </ul>
-          )}
+          <ul className={`${styles.subMenu} ${isOpen ? styles.subMenuOpen : ''}`}>
+            {item.children.map(child => renderMenuItem(child))}
+          </ul>
         </li>
       );
     }
